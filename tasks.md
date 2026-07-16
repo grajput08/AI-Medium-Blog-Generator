@@ -25,11 +25,11 @@ Derived from [spec.md](spec.md). UI phases come first (per priority), backend fo
 ## Phase 3 — 🎨 Blog Generator & Editor UI
 > Goal: the core product surfaces, still on mocks.
 
-- ☐ **T3.1 — Generator form**: all fields from spec §3.4 (topic, keywords tag-input, style/tone/audience/language selects, word-count + creativity sliders, category, 7 toggles), Zod schema, template pre-fill support.
-- ☐ **T3.2 — TipTap editor**: full toolbar (spec §3.5), code blocks w/ syntax highlighting, tables, images, emoji, Markdown import/export, autosave hook.
-- ☐ **T3.3 — Generation experience**: streaming-into-editor UI (SSE client), progress states, regenerate-section actions, token usage badge (mock stream first).
-- ☐ **T3.4 — Featured image UI**: generate-from-prompt panel, upload + crop + resize + download, attach to blog.
-- ☐ **T3.5 — SEO panel**: score gauge, pass/fail checklist, editable SEO title / meta description / slug, keyword density, reading time, link suggestions.
+- ☑ **T3.1 — Generator form**: all fields from spec §3.4 (topic, keywords tag-input, style/tone/audience/language selects, word-count + creativity sliders, category, 7 toggles), Zod schema, template pre-fill support.
+- ☑ **T3.2 — TipTap editor**: full toolbar (spec §3.5), code blocks w/ syntax highlighting, tables, images, emoji, Markdown import/export, autosave hook.
+- ☑ **T3.3 — Generation experience**: streaming-into-editor UI (SSE client), progress states, regenerate-section actions, token usage badge (mock stream first).
+- ☑ **T3.4 — Featured image UI**: generate-from-prompt panel, upload + crop + resize + download, attach to blog.
+- ☑ **T3.5 — SEO panel**: score gauge, pass/fail checklist, editable SEO title / meta description / slug, keyword density, reading time, link suggestions.
 
 ## Phase 4 — 🎨 Content Management & Analytics UI
 - ☐ **T4.1 — Drafts page**: list with search/filter/pagination, card + table views, duplicate/archive/restore/delete actions with confirms and optimistic updates.
