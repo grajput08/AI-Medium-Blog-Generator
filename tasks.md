@@ -32,12 +32,12 @@ Derived from [spec.md](spec.md). UI phases come first (per priority), backend fo
 - ☑ **T3.5 — SEO panel**: score gauge, pass/fail checklist, editable SEO title / meta description / slug, keyword density, reading time, link suggestions.
 
 ## Phase 4 — 🎨 Content Management & Analytics UI
-- ☐ **T4.1 — Drafts page**: list with search/filter/pagination, card + table views, duplicate/archive/restore/delete actions with confirms and optimistic updates.
-- ☐ **T4.2 — Published blogs page**: list with status, published date, Medium link, update/unpublish actions.
-- ☐ **T4.3 — Blog history view**: per-blog timeline (created/updated/published, tokens used, versions with restore).
-- ☐ **T4.4 — Templates gallery**: 15 built-in template cards, preview modal, "Use template" → prefilled generator.
-- ☐ **T4.5 — Analytics page**: Recharts — blogs over time, AI usage, monthly publishing, SEO score distribution; date-range filter.
-- ☐ **T4.6 — Medium integration page**: connect form (token input), connection status card, test connection, publish options UI (now/schedule/draft, public/unlisted), export fallback UI.
+- ☑ **T4.1 — Drafts page**: list with search/filter/pagination, card + table views, duplicate/archive/restore/delete actions with confirms and optimistic updates.
+- ☑ **T4.2 — Published blogs page**: list with status, published date, Medium link, update/unpublish actions.
+- ☑ **T4.3 — Blog history view**: per-blog timeline (created/updated/published, tokens used, versions with restore).
+- ☑ **T4.4 — Templates gallery**: 15 built-in template cards, preview modal, "Use template" → prefilled generator.
+- ☑ **T4.5 — Analytics page**: Recharts — blogs over time, AI usage, monthly publishing, SEO score distribution; date-range filter.
+- ☑ **T4.6 — Medium integration page**: connect form (token input), connection status card, test connection, publish options UI (now/schedule/draft, public/unlisted), export fallback UI.
 
 ## Phase 5 — ⚙️ Backend Foundation
 - ☐ **T5.1 — Backend scaffold**: Express + TypeScript, layered structure (routes/controllers/services/repos), error envelope, request logging, health check; Docker Compose with Postgres.
