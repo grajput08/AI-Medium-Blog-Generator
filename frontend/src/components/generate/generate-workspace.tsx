@@ -16,6 +16,7 @@ import { GeneratorForm } from "@/components/generate/generator-form";
 import { estimateTokens, streamMockArticle } from "@/lib/ai/mock-generator";
 import { htmlToMarkdown, markdownToHtml } from "@/lib/editor/markdown";
 import { loadSettings } from "@/lib/settings";
+import { PREFILL_KEY } from "@/lib/templates";
 import type { GeneratorConfig } from "@/lib/validations/blog";
 
 type Stage = "configure" | "generating" | "editing";
@@ -38,6 +39,21 @@ export function GenerateWorkspace() {
   const [bodyHtml, setBodyHtml] = useState("");
   const [savedAt, setSavedAt] = useState<Date | null>(null);
   const [confirmReset, setConfirmReset] = useState(false);
+  const [prefill, setPrefill] = useState<Partial<GeneratorConfig> | undefined>();
+  const [prefillReady, setPrefillReady] = useState(false);
+
+  // Template pre-fill handoff from the Templates gallery.
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem(PREFILL_KEY);
+      if (raw) {
+        setPrefill(JSON.parse(raw) as Partial<GeneratorConfig>);
+        localStorage.removeItem(PREFILL_KEY);
+      }
+    } finally {
+      setPrefillReady(true);
+    }
+  }, []);
 
   const editorRef = useRef<Editor | null>(null);
   const abortRef = useRef<AbortController | null>(null);
@@ -151,7 +167,9 @@ export function GenerateWorkspace() {
             title="Generate Blog"
             description="Configure your article and let AI draft it — every word stays editable."
           />
-          <GeneratorForm onGenerate={runGeneration} />
+          {prefillReady && (
+            <GeneratorForm onGenerate={runGeneration} initialValues={prefill} />
+          )}
         </>
       )}
 
