@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { LogOut, Menu, Search, Settings, UserRound } from "lucide-react";
 import { Brand } from "@/components/layout/brand";
 import { SidebarNav } from "@/components/layout/sidebar-nav";
@@ -25,9 +26,26 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import {
+  clearSession,
+  getSessionUser,
+  initials,
+  type SessionUser,
+} from "@/lib/session";
 
 export function Topbar() {
+  const router = useRouter();
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [user, setUser] = useState<SessionUser | null>(null);
+
+  useEffect(() => {
+    setUser(getSessionUser());
+  }, []);
+
+  function handleLogout() {
+    clearSession();
+    router.push("/login");
+  }
 
   return (
     <header className="glass sticky top-0 z-40 flex h-14 items-center gap-2 border-x-0 border-t-0 px-4">
@@ -78,17 +96,17 @@ export function Topbar() {
               aria-label="Account menu"
             >
               <Avatar className="size-8">
-                <AvatarFallback className="bg-primary/15 text-xs font-semibold text-primary">
-                  GR
+                <AvatarFallback className="bg-primary/15 text-xs font-semibold text-primary uppercase">
+                  {user ? initials(user.name) : "•"}
                 </AvatarFallback>
               </Avatar>
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-52">
             <DropdownMenuLabel className="flex flex-col">
-              <span>Gatik Rajput</span>
+              <span className="capitalize">{user?.name ?? "Writer"}</span>
               <span className="text-xs font-normal text-muted-foreground">
-                gatik99rajput@gmail.com
+                {user?.email ?? ""}
               </span>
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
@@ -103,7 +121,7 @@ export function Topbar() {
               </Link>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem variant="destructive">
+            <DropdownMenuItem variant="destructive" onClick={handleLogout}>
               <LogOut aria-hidden /> Log out
             </DropdownMenuItem>
           </DropdownMenuContent>

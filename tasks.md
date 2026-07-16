@@ -17,10 +17,10 @@ Derived from [spec.md](spec.md). UI phases come first (per priority), backend fo
 ## Phase 2 — 🎨 Auth & Dashboard UI (mock data)
 > Goal: every auth screen and the dashboard, running on mock fixtures / MSW.
 
-- ☐ **T2.1 — Auth pages**: Sign Up, Login, Forgot/Reset Password — React Hook Form + Zod, OAuth buttons (Google/GitHub), error/loading states, redirect logic scaffolding.
-- ☐ **T2.2 — Dashboard page**: welcome header, 4 stat cards, recent activity feed, quick actions; skeleton loaders; mock data layer behind TanStack Query hooks (swap-ready for real API).
-- ☐ **T2.3 — Profile & Settings pages**: profile edit form, settings (theme, defaults, autosave interval, notifications).
-- ☐ **T2.4 — Billing page (surface)**: plans grid, current plan card, token usage meter, upgrade CTA (stubbed).
+- ☑ **T2.1 — Auth pages**: Sign Up, Login, Forgot/Reset Password — React Hook Form + Zod, OAuth buttons (Google/GitHub), error/loading states, redirect logic scaffolding.
+- ☑ **T2.2 — Dashboard page**: welcome header, 4 stat cards, recent activity feed, quick actions; skeleton loaders; mock data layer behind TanStack Query hooks (swap-ready for real API).
+- ☑ **T2.3 — Profile & Settings pages**: profile edit form, settings (theme, defaults, autosave interval, notifications).
+- ☑ **T2.4 — Billing page (surface)**: plans grid, current plan card, token usage meter, upgrade CTA (stubbed).
 
 ## Phase 3 — 🎨 Blog Generator & Editor UI
 > Goal: the core product surfaces, still on mocks.
