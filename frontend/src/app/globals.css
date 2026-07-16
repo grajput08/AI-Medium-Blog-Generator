@@ -171,6 +171,139 @@
   }
 }
 
+/* TipTap article typography — editorial serif headings, comfortable measure. */
+.tiptap-content {
+  max-width: 46rem;
+  margin-inline: auto;
+  font-size: 1.0625rem;
+  line-height: 1.75;
+}
+.tiptap-content > * + * {
+  margin-top: 0.875em;
+}
+.tiptap-content h1,
+.tiptap-content h2,
+.tiptap-content h3,
+.tiptap-content h4 {
+  font-family: var(--font-fraunces);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+}
+.tiptap-content h1 {
+  font-size: 2rem;
+  margin-top: 0;
+}
+.tiptap-content h2 {
+  font-size: 1.5rem;
+  margin-top: 1.6em;
+}
+.tiptap-content h3 {
+  font-size: 1.2rem;
+  margin-top: 1.3em;
+}
+.tiptap-content blockquote {
+  border-left: 3px solid var(--primary);
+  padding-left: 1rem;
+  font-style: italic;
+  color: var(--muted-foreground);
+}
+.tiptap-content ul,
+.tiptap-content ol {
+  padding-left: 1.4rem;
+}
+.tiptap-content ul {
+  list-style: disc;
+}
+.tiptap-content ol {
+  list-style: decimal;
+}
+.tiptap-content li + li {
+  margin-top: 0.25em;
+}
+.tiptap-content a {
+  color: var(--primary);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.tiptap-content code {
+  background: color-mix(in oklab, var(--muted) 80%, transparent);
+  border-radius: 0.3rem;
+  padding: 0.15em 0.35em;
+  font-family: var(--font-geist-mono);
+  font-size: 0.875em;
+}
+.tiptap-content pre {
+  background: oklch(0.19 0.012 175);
+  color: oklch(0.92 0.01 150);
+  border-radius: var(--radius);
+  padding: 1rem 1.25rem;
+  overflow-x: auto;
+}
+.tiptap-content pre code {
+  background: none;
+  padding: 0;
+  font-size: 0.85rem;
+}
+.tiptap-content img {
+  max-width: 100%;
+  border-radius: var(--radius);
+}
+.tiptap-content table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9375rem;
+}
+.tiptap-content th,
+.tiptap-content td {
+  border: 1px solid var(--border);
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+}
+.tiptap-content th {
+  background: color-mix(in oklab, var(--muted) 70%, transparent);
+  font-weight: 600;
+}
+.tiptap-content hr {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin-block: 1.5em;
+}
+.tiptap-content p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  color: var(--muted-foreground);
+  pointer-events: none;
+}
+
+/* lowlight / highlight.js token colors, tuned to the ink palette. */
+.tiptap-content .hljs-keyword,
+.tiptap-content .hljs-tag,
+.tiptap-content .hljs-name {
+  color: oklch(0.78 0.14 163);
+}
+.tiptap-content .hljs-string,
+.tiptap-content .hljs-attr,
+.tiptap-content .hljs-regexp {
+  color: oklch(0.8 0.14 75);
+}
+.tiptap-content .hljs-title,
+.tiptap-content .hljs-function,
+.tiptap-content .hljs-built_in {
+  color: oklch(0.75 0.1 200);
+}
+.tiptap-content .hljs-comment,
+.tiptap-content .hljs-quote {
+  color: oklch(0.62 0.02 160);
+  font-style: italic;
+}
+.tiptap-content .hljs-number,
+.tiptap-content .hljs-literal,
+.tiptap-content .hljs-type {
+  color: oklch(0.7 0.09 250);
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
