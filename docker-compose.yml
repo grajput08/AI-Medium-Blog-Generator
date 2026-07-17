@@ -1,0 +1,20 @@
+services:
+  db:
+    image: postgres:16
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: inkwell
+      POSTGRES_PASSWORD: inkwell
+      POSTGRES_DB: inkwell
+    ports:
+      - "5434:5432"
+    volumes:
+      - inkwell_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U inkwell -d inkwell"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  inkwell_pgdata:

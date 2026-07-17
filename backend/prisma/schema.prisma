@@ -1,0 +1,235 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum AuthProvider {
+  LOCAL
+  GOOGLE
+  GITHUB
+}
+
+enum BlogStatus {
+  DRAFT
+  SCHEDULED
+  PUBLISHED
+  ARCHIVED
+}
+
+enum AIOperation {
+  GENERATE
+  IMPROVE
+  REWRITE
+  SEO
+  IMAGE
+}
+
+enum ScheduledStatus {
+  PENDING
+  PUBLISHED
+  FAILED
+  CANCELLED
+}
+
+model User {
+  id           String       @id @default(cuid())
+  email        String       @unique
+  name         String
+  avatarUrl    String?
+  passwordHash String?
+  provider     AuthProvider @default(LOCAL)
+  providerId   String?
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+
+  blogs           Blog[]
+  aiUsage         AIUsage[]
+  mediumAccount   MediumAccount?
+  settings        Settings?
+  scheduledPosts  ScheduledPost[]
+  refreshTokens   RefreshToken[]
+  passwordResets  PasswordResetToken[]
+
+  @@index([provider, providerId])
+}
+
+model Blog {
+  id              String     @id @default(cuid())
+  userId          String
+  title           String
+  subtitle        String?
+  slug            String
+  contentJson     Json?
+  contentMarkdown String?
+  featuredImageUrl String?
+  status          BlogStatus @default(DRAFT)
+  seoTitle        String?
+  metaDescription String?
+  readingTime     Int        @default(0)
+  seoScore        Int        @default(0)
+  tokensUsed      Int        @default(0)
+  mediumPostId    String?
+  publishedAt     DateTime?
+  deletedAt       DateTime?
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
+
+  user          User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  category      Category?       @relation(fields: [categoryId], references: [id])
+  categoryId    String?
+  tags          Tag[]
+  drafts        Draft[]
+  aiUsage       AIUsage[]
+  analytics     Analytics[]
+  scheduledPost ScheduledPost?
+
+  @@unique([userId, slug])
+  @@index([userId, status])
+  @@index([status])
+  @@index([updatedAt])
+}
+
+/// Versioned content snapshots of a Blog, enabling restore.
+model Draft {
+  id          String   @id @default(cuid())
+  blogId      String
+  version     Int
+  contentJson Json
+  note        String?
+  createdAt   DateTime @default(now())
+
+  blog Blog @relation(fields: [blogId], references: [id], onDelete: Cascade)
+
+  @@unique([blogId, version])
+  @@index([blogId])
+}
+
+model MediumAccount {
+  id              String    @id @default(cuid())
+  userId          String    @unique
+  encryptedToken  String
+  mediumUserId    String
+  username        String
+  connectedAt     DateTime  @default(now())
+  lastVerifiedAt  DateTime?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model AIUsage {
+  id               String      @id @default(cuid())
+  userId           String
+  blogId           String?
+  operation        AIOperation
+  model            String
+  promptTokens     Int         @default(0)
+  completionTokens Int         @default(0)
+  totalTokens      Int         @default(0)
+  createdAt        DateTime    @default(now())
+
+  user User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  blog Blog? @relation(fields: [blogId], references: [id], onDelete: SetNull)
+
+  @@index([userId, createdAt])
+}
+
+model Tag {
+  id    String @id @default(cuid())
+  name  String @unique
+  blogs Blog[]
+}
+
+model Category {
+  id    String @id @default(cuid())
+  name  String @unique
+  slug  String @unique
+  blogs Blog[]
+}
+
+model Template {
+  id            String  @id @default(cuid())
+  name          String  @unique
+  description   String
+  emoji         String
+  category      String
+  defaultConfig Json
+  outline       Json
+  builtIn       Boolean @default(true)
+}
+
+model ScheduledPost {
+  id           String          @id @default(cuid())
+  blogId       String          @unique
+  userId       String
+  scheduledFor DateTime
+  status       ScheduledStatus @default(PENDING)
+  attempts     Int             @default(0)
+  lastError    String?
+  createdAt    DateTime        @default(now())
+  updatedAt    DateTime        @updatedAt
+
+  blog Blog @relation(fields: [blogId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([status, scheduledFor])
+  @@index([userId])
+}
+
+model Analytics {
+  id     String   @id @default(cuid())
+  blogId String
+  date   DateTime @db.Date
+  views  Int      @default(0)
+  reads  Int      @default(0)
+  claps  Int      @default(0)
+
+  blog Blog @relation(fields: [blogId], references: [id], onDelete: Cascade)
+
+  @@unique([blogId, date])
+  @@index([date])
+}
+
+model Settings {
+  id                 String  @id @default(cuid())
+  userId             String  @unique
+  theme              String  @default("system")
+  defaultStyle       String  @default("tutorial")
+  defaultTone        String  @default("professional")
+  defaultLanguage    String  @default("english")
+  autosaveSeconds    Int     @default(30)
+  emailNotifications Boolean @default(true)
+  publishReminders   Boolean @default(false)
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+/// Rotating refresh tokens, stored hashed; a stolen token is revocable.
+model RefreshToken {
+  id        String    @id @default(cuid())
+  userId    String
+  tokenHash String    @unique
+  expiresAt DateTime
+  revokedAt DateTime?
+  createdAt DateTime  @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model PasswordResetToken {
+  id        String    @id @default(cuid())
+  userId    String
+  tokenHash String    @unique
+  expiresAt DateTime
+  usedAt    DateTime?
+  createdAt DateTime  @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
