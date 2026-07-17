@@ -40,10 +40,10 @@ Derived from [spec.md](spec.md). UI phases come first (per priority), backend fo
 - ☑ **T4.6 — Medium integration page**: connect form (token input), connection status card, test connection, publish options UI (now/schedule/draft, public/unlisted), export fallback UI.
 
 ## Phase 5 — ⚙️ Backend Foundation
-- ☐ **T5.1 — Backend scaffold**: Express + TypeScript, layered structure (routes/controllers/services/repos), error envelope, request logging, health check; Docker Compose with Postgres.
-- ☐ **T5.2 — Prisma schema & migrations**: all 11 models from spec §4 with relations/indexes; initial migration; seed script (templates, categories, demo user).
-- ☐ **T5.3 — Auth API**: register/login/logout/refresh (JWT rotation, bcrypt), forgot/reset password, Google + GitHub OAuth, auth middleware.
-- ☐ **T5.4 — Security hardening**: Helmet, CORS allowlist, rate limiting (global + AI routes), Zod validation middleware (schemas shared with frontend via package or duplication strategy), HTML sanitization, CSP.
+- ☑ **T5.1 — Backend scaffold**: Express + TypeScript, layered structure (routes/controllers/services/repos), error envelope, request logging, health check; Docker Compose with Postgres.
+- ☑ **T5.2 — Prisma schema & migrations**: all 11 models from spec §4 with relations/indexes; initial migration; seed script (templates, categories, demo user).
+- ☑ **T5.3 — Auth API**: register/login/logout/refresh (JWT rotation, bcrypt), forgot/reset password, Google + GitHub OAuth, auth middleware.
+- ☑ **T5.4 — Security hardening**: Helmet, CORS allowlist, rate limiting (global + AI routes), Zod validation middleware (schemas shared with frontend via package or duplication strategy), HTML sanitization, CSP.
 
 ## Phase 6 — ⚙️ Core Backend APIs
 - ☐ **T6.1 — Blogs CRUD API**: list (cursor pagination, filters), get, create, update, soft delete, duplicate, restore, archive; draft version snapshots.
